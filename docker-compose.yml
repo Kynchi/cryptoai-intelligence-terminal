@@ -1,0 +1,25 @@
+services:
+  crypto-forecasting-api:
+    build: .
+    container_name: crypto-forecasting-api
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./datasets:/app/datasets
+      - ./models/artifacts:/app/models/artifacts
+      - ./models/registry:/app/models/registry
+      - ./logs:/app/logs
+      - ./mlruns:/app/mlruns
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.14.1
+    container_name: crypto-forecasting-mlflow
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri /mlflow/mlruns --default-artifact-root /mlflow/mlruns
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlflow/mlruns
+    restart: unless-stopped

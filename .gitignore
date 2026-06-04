@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+frontend/node_modules/
+frontend/dist/
+.env
+logs/*.log
+mlruns/
+models/artifacts/*/*/*
+datasets/processed/*.csv
+*.zip
+!Project.zip
+!crypto-forecasting-platform-final.zip

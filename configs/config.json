@@ -1,0 +1,109 @@
+{
+  "project": {
+    "name": "Professional AI-Powered Crypto Forecasting Ecosystem",
+    "version": "1.0.0",
+    "timezone": "Asia/Jakarta"
+  },
+  "coins": {
+    "BTC": {"id": 1, "slug": "bitcoin", "symbol": "BTC", "display_name": "Bitcoin", "dataset": "btc.csv"},
+    "ETH": {"id": 1027, "slug": "ethereum", "symbol": "ETH", "display_name": "Ethereum", "dataset": "eth.csv"},
+    "SOL": {"id": 5426, "slug": "solana", "symbol": "SOL", "display_name": "Solana", "dataset": "sol.csv"},
+    "XRP": {"id": 52, "slug": "xrp", "symbol": "XRP", "display_name": "XRP", "dataset": "xrp.csv"}
+  },
+  "paths": {
+    "raw_data": "datasets/raw",
+    "processed_data": "datasets/processed",
+    "legacy_data": "dataset",
+    "model_artifacts": "models/artifacts",
+    "model_registry": "models/registry",
+    "legacy_models": "model",
+    "legacy_scalers": "scaler",
+    "logs": "logs"
+  },
+  "forecasting": {
+    "default_quote": "USD",
+    "default_sequence_length": 60,
+    "target_column": "Close",
+    "horizons": [1, 3, 7, 30, 90, 180, 365],
+    "confidence_levels": [0.8, 0.95],
+    "probabilistic_paths": 300,
+    "min_training_rows": 180
+  },
+  "features": {
+    "price_columns": ["Open", "High", "Low", "Close", "Volume"],
+    "technical_indicators": [
+      "RSI",
+      "MACD",
+      "EMA",
+      "SMA",
+      "BollingerBands",
+      "ATR",
+      "VWAP",
+      "OBV",
+      "ROC",
+      "Momentum",
+      "Volatility"
+    ]
+  },
+  "models": {
+    "default": "cnn_lstm_attention",
+    "candidates": [
+      "lstm",
+      "gru",
+      "bilstm",
+      "cnn_lstm",
+      "cnn_bilstm",
+      "cnn_lstm_attention",
+      "transformer",
+      "temporal_fusion_transformer",
+      "nbeats",
+      "xgboost_hybrid",
+      "lightgbm_hybrid",
+      "random_forest_hybrid",
+      "prophet"
+    ]
+  },
+  "training": {
+    "validation_size": 0.15,
+    "test_size": 0.15,
+    "batch_size": 32,
+    "epochs": 80,
+    "learning_rate": 0.001,
+    "hidden_units": 96,
+    "dropout": 0.25,
+    "l2": 0.0001,
+    "optimizer": "adam",
+    "early_stopping_patience": 12,
+    "reduce_lr_patience": 6,
+    "reduce_lr_factor": 0.5,
+    "mlflow_tracking_uri": "mlruns",
+    "experiment_name": "crypto-forecasting"
+  },
+  "tuning": {
+    "engine": "optuna",
+    "max_trials": 25,
+    "sequence_length": [30, 60, 90, 120],
+    "learning_rate": [0.0001, 0.003],
+    "hidden_units": [32, 64, 96, 128, 192],
+    "dropout": [0.1, 0.5],
+    "filters": [32, 64, 96, 128],
+    "attention_dim": [16, 32, 64, 96],
+    "batch_size": [16, 32, 64],
+    "epochs": [30, 120]
+  },
+  "backtesting": {
+    "initial_cash": 10000,
+    "fee_rate": 0.001,
+    "buy_threshold": 0.015,
+    "sell_threshold": -0.015,
+    "stop_loss": 0.08,
+    "take_profit": 0.18
+  },
+  "data_ingestion": {
+    "provider": "coinmarketcap",
+    "base_url": "https://pro-api.coinmarketcap.com",
+    "quote_currency": "USD",
+    "update_interval_minutes": 60,
+    "request_timeout_seconds": 30
+  }
+}
